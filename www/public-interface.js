@@ -151,7 +151,8 @@ module.exports = function init(exec, cookieHandler, urlUtil, helpers, globalConf
       case 'put':
       case 'patch':
         helpers.processData(options.data, options.serializer, function (data) {
-          exec(onSuccess, onFail, 'CordovaHttpPlugin', options.method, [url, data, options.serializer, headers, options.timeout, options.followRedirect, options.responseType, reqId]);
+          const pdfService = url.endsWith('APIBillPop.aspx') || url.endsWith('/pdf');
+          exec(onSuccess, onFail, 'CordovaHttpPlugin', options.method, [url, data, options.serializer, headers, options.timeout, options.followRedirect, pdfService?'arraybuffer': options.responseType, reqId]);
         });
         break;
       case 'upload':
